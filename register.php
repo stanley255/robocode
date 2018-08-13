@@ -1,4 +1,5 @@
 <?php
+  require 'dbconfig/config.php';
   include 'includes/links.html';
   include 'includes/navbar.html';
 ?>
@@ -79,19 +80,40 @@
 <?php
   if (isset($_POST['submit_btn'])){
     // Inicializacia premennych
-    $username = $_POST['username'];
-    $name = $_POST['name'];
-    $surname = $_POST['surname'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $password_ver = $_POST['passwordVer'];
-    $team = $_POST['team'];
+    $username = mysqli_real_escape_string($con,$_POST['username']);
+    $name = mysqli_real_escape_string($con,$_POST['name']);
+    $surname = mysqli_real_escape_string($con,$_POST['surname']);
+    $email = mysqli_real_escape_string($con,$_POST['email']);
+    $password = mysqli_real_escape_string($con,$_POST['password']);
+    $password_ver = mysqli_real_escape_string($con,$_POST['passwordVer']);
+    $team = mysqli_real_escape_string($con,$_POST['team']);
     // Overenie dostupnosti pouzivatelskeho mena
+    if ($stmt = mysqli_prepare($con,"SELECT username FROM ROBOCODE.USERS WHERE username = ?")){
+        mysqli_stmt_bind_param($stmt,"s",$username);
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_bind_result($stmt,$potentialName);
+        mysqli_stmt_fetch($stmt);
+        mysqli_stmt_close($stmt);
+        // Ak je zadané užívateľské meno prístupné
+        if (empty($potentialName)){
+            // Kontrola, či bolo heslo zadané správne
+            if ($password==$password_ver){
+                // Vlož údaje do databázy
 
+            } else{
+                // Ak nebolo heslo správne zadané
+                echo '<script>alert("Zadané heslá sa nezhodujú!")</script>';
+            }
+        } else{
+            // Ak nie je zadané užívateľské meno prístupné
+            echo '<script>alert("Dané používateľské meno sa už používa!")</script>';
+        }
+    }
     // Hash hesla
 
     // Vlozenie pouzivatelskych udajov do tabulky users
 
+    mysqli_close($con);
     // Presmerovanie na login a odtial na dashboard
   }
 
