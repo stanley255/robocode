@@ -1,7 +1,7 @@
 <?php
   require 'dbconfig/config.php';
   include 'includes/links.html';
-  include 'includes/navbar.html';
+  include 'includes/navbar.php';
 ?>
 
 <script>
@@ -62,11 +62,11 @@
       <div class="form-group">
         <label>Vyber si tím:</label>
         <div class="cc-selector">
-          <input id="teamGreen" type="radio" name="team" value="teamGreen" required/>
+          <input id="teamGreen" type="radio" name="team" value="1" required/>
           <label class="team-cc teamGreen" for="teamGreen"></label>
-          <input id="teamRed" type="radio" name="team" value="teamRed" />
+          <input id="teamRed" type="radio" name="team" value="2" />
           <label class="team-cc teamRed" for="teamRed"></label>
-          <input id="teamYellow" type="radio" name="team" value="teamYellow" />
+          <input id="teamYellow" type="radio" name="team" value="3" />
           <label class="team-cc teamYellow" for="teamYellow"></label>
         </div>
       </div>
@@ -80,13 +80,20 @@
 <?php
   if (isset($_POST['submit_btn'])){
     // Inicializacia premennych
-    $username = mysqli_real_escape_string($con,$_POST['username']);
-    $name = mysqli_real_escape_string($con,$_POST['name']);
-    $surname = mysqli_real_escape_string($con,$_POST['surname']);
-    $email = mysqli_real_escape_string($con,$_POST['email']);
-    $password = mysqli_real_escape_string($con,$_POST['password']);
-    $password_ver = mysqli_real_escape_string($con,$_POST['passwordVer']);
-    $team = mysqli_real_escape_string($con,$_POST['team']);
+    $username = $_POST['username'];
+    $name = $_POST['name'];
+    $surname = $_POST['surname'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $password_ver = $_POST['passwordVer'];
+    $team = $_POST['team'];
+    $date = DATE("Y-m-d");
+    $exp = 0;
+    $privilege = 1;
+    // Kedže e-mail je nepovinný, treba overiť, či je definovaný
+    if (empty($email)){
+      $email='';
+    }
     // Overenie dostupnosti pouzivatelskeho mena
     if ($stmt = mysqli_prepare($con,"SELECT username FROM ROBOCODE.USERS WHERE username = ?")){
         mysqli_stmt_bind_param($stmt,"s",$username);
@@ -98,8 +105,25 @@
         if (empty($potentialName)){
             // Kontrola, či bolo heslo zadané správne
             if ($password==$password_ver){
-                // Vlož údaje do databázy
-
+                // Hash hesla
+                $password = password_hash($password,PASSWORD_DEFAULT);
+                // Vlozenie pouzivatelskych udajov do tabulky users
+                if ($stmt = mysqli_prepare($con, "INSERT INTO ROBOCODE.USERS(username,name,surname,email,password,registration_date,team_id,exp,privilege) VALUES(?,?,?,?,?,?,?,?,?)")){
+                  if (mysqli_stmt_bind_param($stmt,"sssssssii",$username,$name,$surname,$email,$password,$date,$team,$exp,$privilege)){
+                    if (mysqli_stmt_execute($stmt)){
+                      // Záznam sa podarilo uložiť
+                      echo '<script>alert("Registrácia bola úspešná!")</script>';
+                      mysqli_stmt_close($stmt);
+                    } else{
+                      // Nepodarilo sa uložiť...
+                      echo '<script>alert("Registrácia bola neúspešná! '.mysqli_error($con).'")</script>';
+                    }
+                  } else{
+                    echo '<script>alert("Registrácia bola neúspešná!")</script>';
+                  }
+                } else{
+                  echo '<script>alert("Registrácia bola neúspešná!")</script>';
+                }
             } else{
                 // Ak nebolo heslo správne zadané
                 echo '<script>alert("Zadané heslá sa nezhodujú!")</script>';
@@ -108,13 +132,8 @@
             // Ak nie je zadané užívateľské meno prístupné
             echo '<script>alert("Dané používateľské meno sa už používa!")</script>';
         }
+        mysqli_close($con);
     }
-    // Hash hesla
-
-    // Vlozenie pouzivatelskych udajov do tabulky users
-
-    mysqli_close($con);
-    // Presmerovanie na login a odtial na dashboard
   }
 
   include 'includes/end.html';
