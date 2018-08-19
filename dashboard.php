@@ -12,7 +12,7 @@
   <div class="col-md-2"></div>
   <div class="col-md-8 text-left">
 <?php
-echo '<br><h3 class="text-center">Oznamy</h3>';
+echo '<br><h3 class="text-center">OZNAMY</h3>';
   // Zobrazenie pinnutych oznamov
     // Ziskanie pinnutych zaznamov z databazy
   $query = "SELECT date, name, text FROM ROBOCODE.V_POSTS WHERE pinned = 'Y'";
