@@ -1,1 +1,2 @@
-/dbconfig
+/dbconfig/config.php
+/dbconfig/grants.sql

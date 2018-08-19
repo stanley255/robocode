@@ -39,11 +39,12 @@
     $retrievedUsername = '';
     $retrievedPassword = '';
     $retrievedPrivilege = 0;
+    $retrievedId = 0;
     // Získanie zahashovaného hesla + overenie správneho username
-    if ($stmt = mysqli_prepare($con,"SELECT username, password, privilege FROM ROBOCODE.USERS WHERE username = ?")){
+    if ($stmt = mysqli_prepare($con,"SELECT id ,username, password, privilege FROM ROBOCODE.USERS WHERE username = ?")){
       mysqli_stmt_bind_param($stmt,"s",$username);
       if (mysqli_stmt_execute($stmt)){
-        mysqli_stmt_bind_result($stmt,$retrievedUsername,$retrievedPassword,$retrievedPrivilege);
+        mysqli_stmt_bind_result($stmt,$retrievedId,$retrievedUsername,$retrievedPassword,$retrievedPrivilege);
         if(mysqli_stmt_fetch($stmt)){
           // Našielo sa heslo k danému username-u
           if (password_verify($password,$retrievedPassword)){
@@ -51,6 +52,7 @@
               // Nastavenie session variables
             $_SESSION['privilege'] = $retrievedPrivilege;
             $_SESSION['username']  = $retrievedUsername;
+            $_SESSION['user_id'] = $retrievedId;
               // Redirect spätne na login -> index || dashboard
             mysqli_stmt_close($stmt);
             header('location:login.php');

@@ -3,7 +3,13 @@
 ?>
 <body>
   <nav class="navbar navbar-expand-md fixed-top">
-    <a class="navbar-brand" href="/robocode/index.php">Robo Code</a>
+    <?php
+    if (!(empty($_SESSION['privilege'])) or $_SESSION['privilege']>1){
+      echo '<a class="navbar-brand" href="/robocode/dashboard.php">Robo Code</a>';
+    } else{
+      echo '<a class="navbar-brand" href="/robocode/index.php">Robo Code</a>';
+    }
+    ?>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -22,14 +28,19 @@
       ?>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-      <?php if (!(empty($_SESSION['privilege'])) and $_SESSION['privilege']==4){
+      <?php
+      if (!(empty($_SESSION['privilege']))){
+        if ($_SESSION['privilege']==4){
+          echo '<li class="nav-item">';
+          echo '  <a class="nav-link" href="/robocode/admin.php">Admin</a>';
+          echo '</li>';
+        }
+      } else{
         echo '<li class="nav-item">';
-        echo '  <a class="nav-link" href="#">Admin</a>';
+        echo '  <a class="nav-link" href="#">O nás</a>';
         echo '</li>';
-      } ?>
-        <li class="nav-item">
-          <a class="nav-link" href="#">O nás</a>
-        </li>
+      }
+      ?>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="https://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Profil</a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown01">
