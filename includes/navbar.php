@@ -1,10 +1,13 @@
 <?php
   session_start();
+  if (empty($_SESSION["privilege"])){
+    $_SESSION["privilege"] = 0;
+  }
 ?>
 <body>
   <nav class="navbar navbar-expand-md fixed-top">
     <?php
-    if (!(empty($_SESSION['privilege'])) or $_SESSION['privilege']>1){
+    if ($_SESSION['privilege']>1){
       echo '<a class="navbar-brand" href="/robocode/dashboard.php">Robo Code</a>';
     } else{
       echo '<a class="navbar-brand" href="/robocode/index.php">Robo Code</a>';
@@ -29,13 +32,12 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
       <?php
-      if (!(empty($_SESSION['privilege']))){
-        if ($_SESSION['privilege']==4){
-          echo '<li class="nav-item">';
-          echo '  <a class="nav-link" href="/robocode/admin.php">Admin</a>';
-          echo '</li>';
-        }
-      } else{
+      if ($_SESSION["privilege"]==4){
+        echo '<li class="nav-item">';
+        echo '  <a class="nav-link" href="/robocode/admin.php">Admin</a>';
+        echo '</li>';
+      }
+      if($_SESSION["privilege"]==0){
         echo '<li class="nav-item">';
         echo '  <a class="nav-link" href="#">O nás</a>';
         echo '</li>';
@@ -45,7 +47,7 @@
           <a class="nav-link dropdown-toggle" href="https://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Profil</a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown01">
           <?php
-            if (!(empty($_SESSION['privilege'])) and $_SESSION['privilege']>1){
+            if ($_SESSION['privilege']>=1){
               echo '<a class="dropdown-item" href="/robocode/profile.php">'.$_SESSION["username"].'</a>';
               echo '<a class="dropdown-item" href="/robocode/logout.php">Odhlásenie</a>';
             } else{

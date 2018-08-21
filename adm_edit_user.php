@@ -16,12 +16,12 @@
   echo '  <tr>';
   echo '    <th>ID</th>';
   echo '    <th>Username</th>';
-  echo '    <th>Meno</th>';
-  echo '    <th>Priezvisko</th>';
+  echo '    <th width="150px">Meno</th>';
+  echo '    <th width="170px">Priezvisko</th>';
   echo '    <th>E-mail</th>';
-  echo '    <th>Team</th>';
-  echo '    <th>EXP</th>';
-  echo '    <th>Právo</th>';
+  echo '    <th width="180px">Team</th>';
+  echo '    <th width="90px">EXP</th>';
+  echo '    <th width="150px">Právo</th>';
   echo '    <th>Úprava</th>';
   echo '  </tr>';
   // Získanie teamov
@@ -56,23 +56,46 @@
   $query_run = mysqli_query($con,$query);
   if (mysqli_num_rows($query_run)){
     while($row = mysqli_fetch_assoc($query_run)){
+      echo '<tr>';
       // ID (nemozno upraviť)
       echo '<td>'.$row['id'].'</td>';
       // Username
-      echo '<td><input type="text" class="form-control" id="" name="username" value="'.$row['username'].'" required></td>';
+      echo '<td><input type="text" class="form-control" id="" name="username'.$row['id'].'" value="'.$row['username'].'" required></td>';
       // Meno
-      echo '<td><input type="text" class="form-control" id="" name="" value="'.$row['name'].'" required></td>';
+      echo '<td><input type="text" class="form-control" id="" name="name'.$row['id'].'" value="'.$row['name'].'" required></td>';
       // Priezvisko
-      echo '<td><input type="text" class="form-control" id="" name="" value="'.$row['surname'].'" required></td>';
+      echo '<td><input type="text" class="form-control" id="" name="surname'.$row['id'].'" value="'.$row['surname'].'" required></td>';
       // E-mail
-      echo '<td><input type="text" class="form-control" id="" name="" value="'.$row['email'].'"></td>';
+      echo '<td><input type="text" class="form-control" id="" name="email'.$row['id'].'" value="'.$row['email'].'"></td>';
       // Team-y
-      echo '<td>'..'</td>';
+      echo '<td>';
+      echo '  <select class="form-control" name="team'.$row["id"].'">';
+      foreach ($a_team_id as $index){
+        if ($row['team_id'] == $index){
+          echo '<option value='.$index.' selected>'.$a_team_name[$index].'</option>';
+        } else {
+          echo '<option value='.$index.'>'.$a_team_name[$index].'</option>';
+        }
+      }
+      echo '  </select>';
+      echo '</td>';
       // EXP
-      echo '<td><input type="text" class="form-control" id="" name="" value="'.$row['exp'].'" required></td>';
+      echo '<td><input type="text" class="form-control" id="" name="exp'.$row['id'].'" value="'.$row['exp'].'" required></td>';
       // Práva
-      echo '<td>&nbsp</td>';
+      echo '<td>';
+      echo '  <select class="form-control" name="privilege'.$row["id"].'">';
+      foreach ($a_privilege_id as $index){
+        if ($row['privilege'] == $index){
+          echo '<option value='.$index.' selected>'.$a_privilege_name[$index].'</option>';
+        } else {
+          echo '<option value='.$index.'>'.$a_privilege_name[$index].'</option>';
+        }
+      }
+      echo '  </select>';
+      echo '</td>';
       // Úprava
+      echo '<td><button class="btn btn-outline-info my-2 my-sm-0" type="submit" name="submit_btn" value="'.$row["id"].'">Uprav</button></td>';
+      echo '</tr>';
     }
   } else{
     echo '<script>alert("Žiadny používatelia neboli nájdení!");</script>';
@@ -83,4 +106,38 @@
   echo '</table>';
   echo '</div>';
   include 'includes/end.html';
+
+  if (isset($_POST["submit_btn"])){
+    // Kvôli refreshu po update-e
+    echo "<meta http-equiv='refresh' content='0'>";
+    // Ziskanie dat z formu
+    $id         = $_POST["submit_btn"];
+    $username   = $_POST["username$id"];
+    $name       = $_POST["name$id"];
+    $surname    = $_POST["surname$id"];
+    $email      = $_POST["email$id"];
+    $team       = $_POST["team$id"];
+    $exp        = $_POST["exp$id"];
+    $privilege  = $_POST["privilege$id"];
+    // Kedže e-mail je nepovinný, treba overiť, či je definovaný
+    if (empty($email)){
+      $email='';
+    }
+    // Update udajov v databaze
+    if ($stmt = mysqli_prepare($con,"UPDATE ROBOCODE.USERS SET username = ?, name = ?,surname = ?,email = ?,team_id = ?,exp = ?,privilege = ? WHERE id = ?")){
+      if (mysqli_stmt_bind_param($stmt,"ssssiiii",$username,$name,$surname,$email,$team,$exp,$privilege,$id)){
+        if (mysqli_stmt_execute($stmt)){
+          // Údaje sa podarilo zmeniť
+          mysqli_stmt_close($stmt);
+          echo '<script>alert("Údaje sa podarilo zmeniť!"</script>';
+        } else{
+          echo '<script>alert("Užívateľove informácie sa nepodarilo upraviť!");</script>';
+        }
+      } else{
+        echo '<script>alert("Užívateľove informácie sa nepodarilo upraviť!");</script>';
+      }
+    } else{
+      echo '<script>alert("Užívateľove informácie sa nepodarilo upraviť!");</script>';
+    }
+  }
 ?>

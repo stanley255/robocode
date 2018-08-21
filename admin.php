@@ -18,7 +18,7 @@
     <hr>
     <hr>
       <h3>POUŽÍVATELIA</h3>
-      <a class="btn btn-outline-info my-2 my-sm-0" href="/robocode/adm_edit_user.php">Privilégiá</a>
+      <a class="btn btn-outline-info my-2 my-sm-0 active" href="/robocode/adm_edit_user.php">Privilégiá</a>
       <a class="btn btn-outline-info my-2 my-sm-0 disabled" href="">Dochádzka</a>
     <hr>
   </div>

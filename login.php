@@ -2,13 +2,11 @@
   require 'dbconfig/config.php';
   include 'includes/links.html';
   include 'includes/navbar.php';
-  // Ak je pouzivatel prihlaseny -> redirect na dashboard | index (na zakl. privilege)
-  if (!(empty($_SESSION['privilege']))){
-    if ($_SESSION['privilege']==1){
-      header('location:index.php');
-    } else{
-      header('location:dashboard.php');
-    }
+  // Ak je pouzivatel prihlaseny -> redirect
+  if ($_SESSION['privilege']==1){
+    header('location:index.php');
+  } else if ($_SESSION['privilege']>1){
+    header('location:dashboard.php');
   }
 ?>
 <div class="container pagination">
@@ -53,9 +51,14 @@
             $_SESSION['privilege'] = $retrievedPrivilege;
             $_SESSION['username']  = $retrievedUsername;
             $_SESSION['user_id'] = $retrievedId;
-              // Redirect spätne na login -> index || dashboard
             mysqli_stmt_close($stmt);
-            header('location:login.php');
+            // Redirect na dashboard | index (na zakl. privilege)
+            echo '<script>alert(0)</script>';
+            if ($_SESSION['privilege']>1){
+              header('location:dashboard.php');
+            } else{
+              header('location:index.php');
+            }
           } else{
             // Heslá sa nezhodujú
             echo '<script>alert("Nesprávne zadané heslo!");</script>';
