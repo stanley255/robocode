@@ -22,8 +22,8 @@
     <hr>
     <hr>
       <h3>DOCHÁDZKA</h3>
-      <a class="btn btn-outline-info my-2 my-sm-0" href="/robocode/adm_attendance_add.php">Pridaj</a>
-      <a class="btn btn-outline-info my-2 my-sm-0" href="">Dochádzka</a>
+      <a class="btn btn-outline-info my-2 my-sm-0 active" href="adm_attendance_show.php">Zobraz</a>
+      <a class="btn btn-outline-info my-2 my-sm-0 active" href="/robocode/adm_attendance_add.php">Pridaj</a>
     <hr>
   </div>
   <div class="col-md-2"></div>

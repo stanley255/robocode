@@ -10,7 +10,7 @@
   // FORM
   echo '<form action="adm_edit_user.php" method="post">';
   // TABULKA
-  echo '<div class="table-responsive col-md-12 container pagination">';
+  echo '<div class="table-responsive col-md-11 container pagination">';
   echo '<table class="table table-bordered">';
     // HEADING
   echo '  <tr>';
