@@ -11,8 +11,8 @@
   }
 
   function validateForm(){
-    var email = document.getElementById('emailId').value;
-    var password = document.getElementById('passwordId').value;
+    var email =       document.getElementById('emailId').value;
+    var password =    document.getElementById('passwordId').value;
     var passwordVer = document.getElementById('passwordVerId').value;
     if (password.length < 5){
         alert("Heslo musí byť dlhé aspoň 5 znakov!");
@@ -80,16 +80,16 @@
 <?php
   if (isset($_POST['submit_btn'])){
     // Inicializacia premennych
-    $username = $_POST['username'];
-    $name = $_POST['name'];
-    $surname = $_POST['surname'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
+    $username     = $_POST['username'];
+    $name         = $_POST['name'];
+    $surname      = $_POST['surname'];
+    $email        = $_POST['email'];
+    $password     = $_POST['password'];
     $password_ver = $_POST['passwordVer'];
-    $team = $_POST['team'];
-    $date = DATE("Y-m-d");
-    $exp = 0;
-    $privilege = 1;
+    $team         = $_POST['team'];
+    $date         = DATE("Y-m-d");
+    $exp          = 0;
+    $privilege    = 1;
     // Kedže e-mail je nepovinný, treba overiť, či je definovaný
     if (empty($email)){
       $email='';

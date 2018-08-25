@@ -25,11 +25,11 @@
   echo '    <th>Úprava</th>';
   echo '  </tr>';
   // Získanie teamov
-  $i = 0;
-  $a_team_id = array();
+  $i           = 0;
+  $a_team_id   = array();
   $a_team_name = array();
-  $query = "SELECT * FROM ROBOCODE.teams";
-  $query_run = mysqli_query($con,$query);
+  $query       = "SELECT * FROM ROBOCODE.teams";
+  $query_run   = mysqli_query($con,$query);
   if (mysqli_num_rows($query_run)){
     while($row = mysqli_fetch_assoc($query_run)){
       $a_team_id[$i++] = $row['id'];

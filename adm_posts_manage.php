@@ -63,8 +63,8 @@
   if (isset($_POST["submit_btn"])){
     // Ziskanie premmenych z form-u
     echo "<meta http-equiv='refresh' content='0'>";
-    $id = $_POST["submit_btn"];
-    $text = $_POST["text$id"];
+    $id     = $_POST["submit_btn"];
+    $text   = $_POST["text$id"];
     $pinned = $_POST["pinned$id"];
     // Update starých údajov
     if ($stmt = mysqli_prepare($con,"UPDATE ROBOCODE.POSTS SET text = ? , pinned = ? WHERE id = ?")){

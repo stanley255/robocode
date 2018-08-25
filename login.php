@@ -32,12 +32,12 @@
   include 'includes/end.html';
   // Prihlásenie
   if (isset($_POST['submit_btn'])){
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    $retrievedUsername = '';
-    $retrievedPassword = '';
+    $username           = $_POST['username'];
+    $password           = $_POST['password'];
+    $retrievedUsername  = '';
+    $retrievedPassword  = '';
     $retrievedPrivilege = 0;
-    $retrievedId = 0;
+    $retrievedId        = 0;
     // Získanie zahashovaného hesla + overenie správneho username
     if ($stmt = mysqli_prepare($con,"SELECT id ,username, password, privilege FROM ROBOCODE.USERS WHERE username = ?")){
       mysqli_stmt_bind_param($stmt,"s",$username);
@@ -50,7 +50,7 @@
               // Nastavenie session variables
             $_SESSION['privilege'] = $retrievedPrivilege;
             $_SESSION['username']  = $retrievedUsername;
-            $_SESSION['user_id'] = $retrievedId;
+            $_SESSION['user_id']   = $retrievedId;
             mysqli_stmt_close($stmt);
             // Redirect na dashboard | index (na zakl. privilege)
             echo '<script>alert(0)</script>';

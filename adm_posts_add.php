@@ -47,9 +47,9 @@ function controlForm(){
   // POST PART
   if (isset($_POST['submit_btn'])){
     // Ziskanie premmenych z form-u
-    $text = $_POST["text"];
+    $text   = $_POST["text"];
     $pinned = $_POST["pinned"];
-    $date = DATE("Y-m-d");
+    $date   = DATE("Y-m-d");
     // Udaj o user_id sa nachadza v session variables
 
     // Prepared statement na vlozenie oznamu do tabulky
