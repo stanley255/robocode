@@ -9,3 +9,7 @@ INSERT INTO ROBOCODE.TEAMS(name,exp) VALUES('Zelený tím',0);
 INSERT INTO ROBOCODE.TEAMS(name,exp) VALUES('Červený tím',0);
 INSERT INTO ROBOCODE.TEAMS(name,exp) VALUES('Žltý tím',0);
 INSERT INTO ROBOCODE.TEAMS(name,exp) VALUES('Admin tím',0);
+
+-- Inserty kategórií eventov
+INSERT INTO ROBOCODE.EVENTS_CATEGORY(name) VALUES('Hodina');
+INSERT INTO ROBOCODE.EVENTS_CATEGORY(name) VALUES('Súťaž');
