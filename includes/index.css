@@ -1,0 +1,22 @@
+/*------- GLOBAL --------*/
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  vertical-align: baseline;
+}
+body {
+  width: 100%;
+}
+
+/*------- HEADER --------*/
+header {
+  height: 1080px;
+  min-height: 1080px;
+  padding: 0 5%;
+  background-image: url('test.jpg');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: top right;
+}
