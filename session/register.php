@@ -1,7 +1,7 @@
 <?php
-  require 'dbconfig/config.php';
-  include 'includes/links.html';
-  include 'includes/navbar.php';
+  require '../dbconfig/config.php';
+  include '../includes/links.html';
+  include '../includes/navbar.php';
 ?>
 
 <script>
@@ -112,7 +112,7 @@
                   if (mysqli_stmt_bind_param($stmt,"sssssssii",$username,$name,$surname,$email,$password,$date,$team,$exp,$privilege)){
                     if (mysqli_stmt_execute($stmt)){
                       // Záznam sa podarilo uložiť
-                      echo '<script>alert("Registrácia bola úspešná, môžete sa prihlásiť!");window.location.replace("login.php");</script>';
+                      echo '<script>alert("Registrácia bola úspešná, môžete sa prihlásiť!");window.location.replace("../login.php");</script>';
                       mysqli_stmt_close($stmt);
                     } else{
                       // Nepodarilo sa uložiť...
@@ -136,5 +136,5 @@
     }
   }
 
-  include 'includes/end.html';
+  include '../includes/end.html';
 ?>

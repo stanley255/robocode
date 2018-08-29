@@ -34,7 +34,7 @@
       <?php
       if ($_SESSION["privilege"]==4){
         echo '<li class="nav-item">';
-        echo '  <a class="nav-link" href="/robocode/admin.php">Admin</a>';
+        echo '  <a class="nav-link" href="/robocode/admin/admin.php">Admin</a>';
         echo '</li>';
       }
       if($_SESSION["privilege"]==0){
@@ -49,10 +49,10 @@
           <?php
             if ($_SESSION['privilege']>=1){
               echo '<a class="dropdown-item" href="/robocode/profile.php">'.$_SESSION["username"].'</a>';
-              echo '<a class="dropdown-item" href="/robocode/logout.php">Odhlásenie</a>';
+              echo '<a class="dropdown-item" href="/robocode/session/logout.php">Odhlásenie</a>';
             } else{
-              echo '<a class="dropdown-item" href="/robocode/login.php">Prihlásenie</a>';
-              echo '<a class="dropdown-item" href="/robocode/register.php">Registrácia</a>';
+              echo '<a class="dropdown-item" href="/robocode/session/login.php">Prihlásenie</a>';
+              echo '<a class="dropdown-item" href="/robocode/session/register.php">Registrácia</a>';
             }
           ?>
           </div>

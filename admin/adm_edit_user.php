@@ -1,10 +1,10 @@
 <?php
-  require 'dbconfig/config.php';
-  include 'includes/links.html';
-  include 'includes/navbar.php';
+require '../dbconfig/config.php';
+include '../includes/links.html';
+include '../includes/navbar.php';
   // Pristupy
   if (empty($_SESSION['privilege']) or $_SESSION['privilege']!=4){
-    header('location:index.php');
+    header('location:../index.html');
   }
   echo '<br>';
   // FORM
@@ -105,7 +105,7 @@
   // KONIEC TABULKY
   echo '</table>';
   echo '</div>';
-  include 'includes/end.html';
+  include '../includes/end.html';
 
   if (isset($_POST["submit_btn"])){
     // Kvôli refreshu po update-e

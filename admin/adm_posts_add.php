@@ -1,10 +1,10 @@
 <?php
-  require 'dbconfig/config.php';
-  include 'includes/links.html';
-  include 'includes/navbar.php';
+require '../dbconfig/config.php';
+include '../includes/links.html';
+include '../includes/navbar.php';
   // Pristupy
   if (empty($_SESSION['privilege']) or $_SESSION['privilege']!=4){
-    header('location:index.php');
+    header('location:../index.html');
   }
 ?>
 <script>
@@ -42,7 +42,7 @@ function controlForm(){
   <div class="col-md-3"></div>
 </div>
 <?php
-  include 'includes/end.html';
+  include '../includes/end.html';
 
   // POST PART
   if (isset($_POST['submit_btn'])){

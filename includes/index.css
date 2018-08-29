@@ -15,7 +15,7 @@ header {
   height: 1080px;
   min-height: 1080px;
   padding: 0 5%;
-  background-image: url('test.jpg');
+  background-image: url('../img/test.jpg');
   background-repeat: no-repeat;
   background-size: contain;
   background-position: top right;

@@ -1,10 +1,10 @@
 <?php
-  require 'dbconfig/config.php';
-  include 'includes/links.html';
-  include 'includes/navbar.php';
+require '../dbconfig/config.php';
+include '../includes/links.html';
+include '../includes/navbar.php';
   // Pristupy
   if (empty($_SESSION['privilege']) or $_SESSION['privilege']!=4){
-    header('location:index.php');
+    header('location:../index.html');
   }
   echo '<br>';
   // FORM
@@ -56,7 +56,7 @@
   echo '</div>';
   echo '<div class="col-md-1"></div>';
 
-  include 'includes/end.html';
+  include '../includes/end.html';
 
 
   // POST PART

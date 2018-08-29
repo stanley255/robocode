@@ -1,12 +1,12 @@
 <?php
-  require 'dbconfig/config.php';
-  include 'includes/links.html';
-  include 'includes/navbar.php';
+  require '../dbconfig/config.php';
+  include '../includes/links.html';
+  include '../includes/navbar.php';
   // Ak je pouzivatel prihlaseny -> redirect
   if ($_SESSION['privilege']==1){
-    header('location:index.php');
+    header('location:../index.html');
   } else if ($_SESSION['privilege']>1){
-    header('location:dashboard.php');
+    header('location:../dashboard.php');
   }
 ?>
 <div class="container pagination">
@@ -29,7 +29,7 @@
   <div class="col-md-3"></div>
 </div>
 <?php
-  include 'includes/end.html';
+  include '../includes/end.html';
   // Prihlásenie
   if (isset($_POST['submit_btn'])){
     $username           = $_POST['username'];
@@ -53,11 +53,10 @@
             $_SESSION['user_id']   = $retrievedId;
             mysqli_stmt_close($stmt);
             // Redirect na dashboard | index (na zakl. privilege)
-            echo '<script>alert(0)</script>';
             if ($_SESSION['privilege']>1){
-              header('location:dashboard.php');
+              header('location:../dashboard.php');
             } else{
-              header('location:index.php');
+              header('location:../index.html');
             }
           } else{
             // Heslá sa nezhodujú
