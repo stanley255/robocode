@@ -89,3 +89,24 @@ CREATE TABLE ROBOCODE.ATTENDANCE(
   FOREIGN KEY(fk_event_id) REFERENCES EVENTS(ID),
   FOREIGN KEY(fk_user_id)  REFERENCES USERS(ID)
 );
+
+CREATE TABLE ROBOCODE.LESSONS(
+  id          INT PRIMARY KEY AUTO_INCREMENT,
+  name        VARCHAR(50),
+  description VARCHAR(1000)
+);
+
+CREATE TABLE ROBOCODE.QUESTS(
+  id          INT PRIMARY KEY AUTO_INCREMENT,
+  name        VARCHAR(50),
+  description VARCHAR(2000),
+  exp         INT
+);
+
+CREATE TABLE ROBOCODE.QUESTS_MAP(
+  fk_lesson_id INT,
+  fk_quest_id  INT,
+  quest_order  INT,
+  FOREIGN KEY(fk_lesson_id) REFERENCES LESSONS(id),
+  FOREIGN KEY(fk_quest_id)  REFERENCES QUESTS(id)
+);

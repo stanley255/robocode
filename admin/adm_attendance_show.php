@@ -53,7 +53,7 @@ include '../includes/navbar.php';
   for ($i; $i<count($a_events_id); $i++){
     // Vypis datum
     echo '<tr>';
-    echo '  <td><a href="/robocode/adm_attendance_edit.php?id='.$a_events_id[$i].'">'.date("d.m.Y",strtotime($a_events_date[$i])).'</a></td>';
+    echo '  <td><a href="/robocode/admin/adm_attendance_edit.php?id='.$a_events_id[$i].'">'.date("d.m.Y",strtotime($a_events_date[$i])).'</a></td>';
     // Ziskaj študentov, ktorí sa zúčastnili daného eventu -> sprav pole
     $j = 0;
     $a_attended_students = [];

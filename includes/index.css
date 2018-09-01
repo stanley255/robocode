@@ -12,11 +12,38 @@ body {
 
 /*------- HEADER --------*/
 header {
-  height: 1080px;
-  min-height: 1080px;
+  height: 800px;
+  min-height: 800px;
   padding: 0 5%;
   background-image: url('../img/test.jpg');
   background-repeat: no-repeat;
   background-size: contain;
   background-position: top right;
+}
+
+header h1 {
+  font-size:60px;
+  font-weight: bold;
+  margin: 2em 0 0 1em;
+}
+
+header h1 span {
+  font-size:40px;
+  font-weight: normal;
+}
+
+.sponsors_intro {
+  height: 550px;
+  min-height: 550px;
+  background-image: url('../img/support.png');
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: center;
+}
+
+.sponsors_intro h1 {
+  text-align: center;
+  position: relative;
+  top: 33%;
+  transform: translateY(-33%);
 }
