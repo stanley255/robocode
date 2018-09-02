@@ -54,19 +54,8 @@
           document.getElementById("submit_btn_id").disabled = true;
           // Skryť lessonAddForm
           document.getElementById("lessonFormId").style.display="none";
-          // Potrebné zmeny
-          document.getElementById("heading").innerHTML = "Úlohy ("+name+")";
           // Zobraziť form na pridávanie questov
-          document.getElementById("questFormId").style.display="block";
-          // Prípadné naplnenie questov
-          var xhttp2 = new XMLHttpRequest();
-          xhttp2.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-              alert(this.responseText);
-            }
-          }
-          xhttp2.open("GET", "../ajax/getQuestInfo.php?q_id="q_id+, true);
-          xhttp2.send();
+
         } else{
           alert('Nepodarilo sa pridať/upraviť lekciu!');
         }
@@ -80,11 +69,12 @@
 
 <div class="container text-center pagnation">
     <hr>
-      <h3 id="heading">Lekcia</h3>
+      <h3>Lekcia</h3>
     <hr>
     <form id="lessonFormId">
     <!-- Select -->
     <div class="form-inline">
+      <label>Lekcia:&nbsp</label>
       <select name="id" id="lessonId" class="form-control" style="width:200px;">
         <option value="0" onclick="clearLessonInfo()">Vytvor novú</option>
 <?php
@@ -97,12 +87,16 @@
   }
 ?>
       </select>
+
       <!-- Name -->
       <label>&nbsp&nbsp&nbspNázov:&nbsp</label>
       <input type="text" class="form-control" id="nameId" name="name" style="width:200px" required>
+    </div>
+    <br>
+    <div class="form-inline text-left">
       <!-- Description -->
-      <label>&nbsp&nbsp&nbspPopis:&nbsp</label>
-      <input type="text" class="form-control" id="descId" name="desc" style="width:609px">
+      <label>Popis:&nbsp</label>
+      <input type="textarea" class="form-control" id="descId" name="desc" style="width: 650px;">
     </div>
     <br>
     <div class="form-inline">
@@ -118,8 +112,8 @@
   </form>
   <form ="questFormId" hidden>
     <div class="form-inline">
-      <select name="quest" id="questId" class="form-control" style="width:200px;">
-        <option value=0>Vytvor novú</option>
+      <label>Úloha: </label>
+      <select>
 
       </select>
     </div>

@@ -57,7 +57,7 @@ function controlForm(){
       if (mysqli_stmt_bind_param($stmt,"siss",$date,$_SESSION['user_id'],$text,$pinned)){
         if (mysqli_stmt_execute($stmt)){
           echo '<script>alert("Oznam sa podarilo pridať!")</script>';
-          header('location:dashboard.php');
+          header('location:../dashboard.php');
           mysqli_stmt_close($stmt);
         } else{
           echo '<script>alert("Oznam sa nepodarilo pridať!")</script>';
