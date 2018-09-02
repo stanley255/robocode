@@ -54,8 +54,19 @@
           document.getElementById("submit_btn_id").disabled = true;
           // Skryť lessonAddForm
           document.getElementById("lessonFormId").style.display="none";
+          // Potrebné zmeny
+          document.getElementById("heading").innerHTML = "Úlohy ("+name+")";
           // Zobraziť form na pridávanie questov
-
+          document.getElementById("questFormId").style.display="block";
+          // Prípadné naplnenie questov
+          var xhttp2 = new XMLHttpRequest();
+          xhttp2.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+              alert(this.responseText);
+            }
+          }
+          xhttp2.open("GET", "../ajax/getQuestInfo.php?q_id="q_id+, true);
+          xhttp2.send();
         } else{
           alert('Nepodarilo sa pridať/upraviť lekciu!');
         }
@@ -69,7 +80,7 @@
 
 <div class="container text-center pagnation">
     <hr>
-      <h3>Lekcia</h3>
+      <h3 id="heading">Lekcia</h3>
     <hr>
     <form id="lessonFormId">
     <!-- Select -->
@@ -106,7 +117,12 @@
     </div>
   </form>
   <form ="questFormId" hidden>
-    
+    <div class="form-inline">
+      <select name="quest" id="questId" class="form-control" style="width:200px;">
+        <option value=0>Vytvor novú</option>
+
+      </select>
+    </div>
   </form>
 </div>
 <?php
