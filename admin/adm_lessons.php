@@ -55,7 +55,26 @@
           // Skryť lessonAddForm
           document.getElementById("lessonFormId").style.display="none";
           // Zobraziť form na pridávanie questov
-
+          document.getElementById("questFormId").style.display="block";
+          // Získaj údaje o questoch
+          var xhttp2 = new XMLHttpRequest();
+          xhttp2.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+              // Získat response z getQuestInfo
+              var quests = JSON.parse(this.responseText);
+              // Nastav možnosti do select-u
+              var questSelect = document.getElementById("questsId");
+              for (var i = 0; i < quests.length; i++){
+                var option = document.createElement("option");
+                option.text  = quests[i]["name"];
+                option.value = quests[i]["id"];
+                questSelect.add(option);
+              }
+            }
+          };
+          xhttp2.open("POST", "../ajax/getQuests.php", true);
+          xhttp2.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+          xhttp2.send("id="+ document.getElementById("lessonId").value);
         } else{
           alert('Nepodarilo sa pridať/upraviť lekciu!');
         }
@@ -64,6 +83,19 @@
     xhttp.open("POST", "../ajax/newLesson.php", true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send("id="+id+"&name="+name+"&desc="+desc+"&valid="+valid);
+  }
+
+  function getQuestInfo(id){
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        // Naplnenie inputov na zaklade vratenych udajov
+        var response = JSON.parse(this.responseText);
+        /* TODO */
+      }
+    };
+    xhttp.open("GET", "../ajax/getQuestnInfo.php?id="+id, true);
+    xhttp.send();
   }
 </script>
 
@@ -110,14 +142,22 @@
       <input class="btn btn-outline-info my-2 my-sm-0" onclick="addLesson()" type="button" value="Ďalej" id="submit_btn_id" name="submit_btn">
     </div>
   </form>
-  <form ="questFormId" hidden>
-    <div class="form-inline">
-      <label>Úloha: </label>
-      <select>
 
+
+  <form id="questFormId" style="display:none">
+    <div class="form-inline">
+      <label>Úloha:&nbsp&nbsp</label>
+      <select id="questsId" class="form-control">
+        <option value="0">Vytvoriť novú</option>
       </select>
+      <label>&nbsp&nbspNázov:&nbsp&nbsp</label>
+    </div>
+    <div class="form-group">
+      <label>Zadanie:</label>
+      <textarea class="form-control" rows="5" name="text" id="textId"></textarea>
     </div>
   </form>
+
 </div>
 <?php
   include '../includes/end.html';
