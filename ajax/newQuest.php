@@ -1,0 +1,74 @@
+<?php
+  require '../dbconfig/config.php';
+  session_start();
+  // kontrola pristupov
+  if (empty($_SESSION['privilege']) or $_SESSION['privilege']!=4){
+    echo '-1';
+  }
+
+  $q_id    = $_REQUEST['q_id'];
+  $l_id    = $_REQUEST['l_id'];
+  $name  = $_REQUEST['name'];
+  $desc  = $_REQUEST['desc'];
+  $exp = $_REQUEST['exp'];
+/***********************\
+* RESPONSE              *
+*  - action: 1 = INSERT *
+*            2 = UPDATE *
+*           -1 = FAIL   *
+\***********************/
+header('Content-Type: application/json');
+$response['action'] = -1;
+  // Ak je ID==0 / submit_btn == 'Pridat' potom insert / update
+  if ($q_id == 0){
+    if ($stmt = mysqli_prepare($con,"INSERT INTO ROBOCODE.QUESTS(name,description,exp) VALUES(?,?,?)")){
+      if (mysqli_stmt_bind_param($stmt,"ssi",$name,$desc,$exp)){
+        if (mysqli_stmt_execute($stmt)){
+          mysqli_stmt_close($stmt);
+          $response['action'] = 1;
+        } else{
+          echo json_encode($response);
+        }
+      } else{
+        echo json_encode($response);
+      }
+    } else{
+      echo json_encode($response);
+    }
+  } else{
+    if ($stmt = mysqli_prepare($con,"UPDATE ROBOCODE.QUESTS SET name=?, description=?, exp=? WHERE id=?")){
+      if (mysqli_stmt_bind_param($stmt,"ssii",$name,$desc,$exp,$q_id)){
+        if (mysqli_stmt_execute($stmt)){
+          mysqli_stmt_close($stmt);
+          $response['action'] = 2;
+        }
+      } else{
+        echo json_encode($response);
+      }
+    } else{
+      echo json_encode($response);
+    }
+  }
+  // Over, ci bol zaznam uspesne vlozeny / aktualizovany
+  if ($response['action'] == 1 OR $response['action'] == 2){
+    if ($stmt = mysqli_prepare($con,"INSERT INTO ROBOCODE.QUESTS_MAP VALUES(?,?,null)")){
+      if (mysqli_stmt_bind_param($stmt,"ii",$l_id,$q_id)){
+        if (mysqli_stmt_execute($stmt)){
+          mysqli_stmt_close($stmt);
+          echo json_encode($response);
+        } else{
+          $response['action'] = -4;
+          echo json_encode($response);
+        }
+      } else{
+        $response['action'] = -3;
+        echo json_encode($response);
+      }
+    } else{
+      $response['action'] = -2;
+      echo json_encode($response);
+    }
+  } else{
+    echo json_encode($response);
+  }
+?>

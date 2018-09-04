@@ -34,6 +34,36 @@
     xhttp.send();
   }
 
+  function addQuestToSelect(id,name){
+    var questSelect = document.getElementById("questsId");
+    var option = document.createElement("option");
+    option.value   = id;
+    option.text    = name;
+    option.onclick = function(){fillQuest(this.value)};
+    questSelect.add(option);
+  }
+
+  function fillQuest(id){
+    if (id == 0){
+      document.getElementById("questNameId").value = "";
+      document.getElementById("questTextId").value = "";
+      document.getElementById("questExpId").value  = "";
+    } else{
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          // Naplnenie inputov na zaklade vratenych udajov
+          var response = JSON.parse(this.responseText);
+          document.getElementById("questNameId").value = response["name"];
+          document.getElementById("questTextId").value = response["description"];
+          document.getElementById("questExpId").value  = response["exp"];
+        }
+      };
+      xhttp.open("GET", "../ajax/getQuestInfo.php?id="+id, true);
+      xhttp.send();
+    }
+  }
+
   function addLesson(){
     // Ziskanie udajov z formu
     var id    = document.getElementById("lessonId").value;
@@ -62,13 +92,8 @@
             if (this.readyState == 4 && this.status == 200) {
               // Získat response z getQuestInfo
               var quests = JSON.parse(this.responseText);
-              // Nastav možnosti do select-u
-              var questSelect = document.getElementById("questsId");
               for (var i = 0; i < quests.length; i++){
-                var option = document.createElement("option");
-                option.text  = quests[i]["name"];
-                option.value = quests[i]["id"];
-                questSelect.add(option);
+                addQuestToSelect(quests[i]["id"],quests[i]["name"]);
               }
             }
           };
@@ -85,17 +110,29 @@
     xhttp.send("id="+id+"&name="+name+"&desc="+desc+"&valid="+valid);
   }
 
-  function getQuestInfo(id){
+  function addQuest(){
+    // Ziskanie udajov z form-u
+    var q_id = document.getElementById("questsId").value;
+    var l_id = document.getElementById("lessonId").value;
+    var name = document.getElementById("questNameId").value;
+    var desc = document.getElementById("questTextId").value;
+    var exp  = document.getElementById("questExpId").value;
+    // Odoslanie poziadavky na BE - insert/update
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
-        // Naplnenie inputov na zaklade vratenych udajov
         var response = JSON.parse(this.responseText);
-        /* TODO */
+        if (response["action"]==1 || response["action"]==2){
+          alert();
+        } else{
+          //alert("Nastala chyba pri zapísaní / aktualizovaní úlohy!");
+          alert(response["action"]);
+        }
       }
     };
-    xhttp.open("GET", "../ajax/getQuestnInfo.php?id="+id, true);
-    xhttp.send();
+    xhttp.open("POST", "../ajax/newQuest.php", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send("q_id="+q_id+"l_id="+l_id+"&name="+name+"&desc="+desc+"&exp="+exp);
   }
 </script>
 
@@ -148,13 +185,26 @@
     <div class="form-inline">
       <label>Úloha:&nbsp&nbsp</label>
       <select id="questsId" class="form-control">
-        <option value="0">Vytvoriť novú</option>
+        <option value="0" onclick="fillQuest(0)">Vytvoriť novú</option>
       </select>
-      <label>&nbsp&nbspNázov:&nbsp&nbsp</label>
     </div>
+    <br>
+    <div class="form-inline">
+      <label>Názov:&nbsp&nbsp</label>
+      <input type="text" class="form-control" id="questNameId">
+    </div>
+    <br>
+    <div class="form-inline">
+      <label>EXP:&nbsp&nbsp&nbsp&nbsp&nbsp</label>
+      <input type="text" class="form-control" id="questExpId" style="width:70px">
+    </div>
+    <br>
     <div class="form-group">
       <label>Zadanie:</label>
-      <textarea class="form-control" rows="5" name="text" id="textId"></textarea>
+      <textarea class="form-control" rows="5" name="text" id="questTextId"></textarea>
+    </div>
+    <div class="form-group">
+      <input class="btn btn-outline-info my-2 my-sm-0" onclick="addQuest()" type="button" value="Ďalej" id="submit_btn_id" name="submit_btn">
     </div>
   </form>
 
