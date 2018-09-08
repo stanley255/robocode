@@ -10,8 +10,8 @@
   }
 ?>
 <div class="container pagination">
-  <div class="col-md-3"></div>
-  <div class="col-md-6 text-center">
+  <div class="col-md-4"></div>
+  <div class="col-md-4 text-center">
       <form action="login.php" method="post">
       <hr><h3>Prihlás sa!</h3><hr>
       <div class="form-group">
@@ -26,7 +26,7 @@
       <hr>
       </form>
   </div>
-  <div class="col-md-3"></div>
+  <div class="col-md-4"></div>
 </div>
 <?php
   include '../includes/end.html';

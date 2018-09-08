@@ -1,5 +1,4 @@
 <?php
-  require 'dbconfig/config.php';
   session_start();
   if (empty($_SESSION["privilege"])){
     $_SESSION["privilege"] = 0;
@@ -21,7 +20,7 @@
     <div class="collapse navbar-collapse" id="navbar2">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="https://example.com" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Lekcie</a>
+          <a class="nav-link dropdown-toggle" href="" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Lekcie</a>
             <div class="dropdown-menu dropdown-menu-left" aria-labelledby="dropdown02">
       <?php
         if (!(empty($_SESSION['privilege'])) and $_SESSION['privilege']>1){
@@ -29,7 +28,7 @@
           $query_run = mysqli_query($con,$query);
           if (mysqli_num_rows($query_run)){
             while ($row = mysqli_fetch_assoc($query_run)){
-              echo '<a class="dropdown-item" href="/robocode/lessons/lesson.php?id="'.$row['id'].'">'.$row['name'].'</a>';
+              echo '<a class="dropdown-item" href="/robocode/lessons/lesson.php?id='.$row['id'].'" >'.$row['name'].'</a>';
             }
           }
         }
@@ -54,7 +53,7 @@
       }
       ?>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Profil</a>
+          <a class="nav-link dropdown-toggle" href="" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Profil</a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown02">
           <?php
             if ($_SESSION['privilege']>=1){
