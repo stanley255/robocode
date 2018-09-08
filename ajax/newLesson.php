@@ -10,12 +10,16 @@
   $name  = $_REQUEST['name'];
   $desc  = $_REQUEST['desc'];
   $valid = $_REQUEST['valid'];
-/***********************\
-* RESPONSE              *
-*  - action: 1 = INSERT *
-*            2 = UPDATE *
-*           -1 = FAIL   *
-\***********************/
+/*******************************\
+* RESPONSE                      *
+*  - action: 1 = INSERT         *
+*            2 = UPDATE         *
+*           -1 = FAIL           *
+*                               *
+*  - id: case insert -> new id  *
+*        case update -> prev id *
+*                               *
+\*******************************/
 header('Content-Type: application/json');
 $response['action'] = -1;
   // Ak je ID==0 / submit_btn == 'Pridat' potom insert / update
@@ -25,7 +29,17 @@ $response['action'] = -1;
         if (mysqli_stmt_execute($stmt)){
           mysqli_stmt_close($stmt);
           $response['action'] = 1;
-          echo json_encode($response);
+          // Ziskanie noveho IDcka
+          $query = "SELECT MAX(id) AS l_id FROM ROBOCODE.LESSONS";
+          $query_run = mysqli_query($con,$query);
+          if (mysqli_num_rows($query_run)){
+            $row = mysqli_fetch_assoc($query_run);
+            $response["id"] = $row["l_id"];
+            echo json_encode($response);
+          } else{
+            $response['action'] = -1;
+            echo json_encode($response);
+          }
         } else{
           echo json_encode($response);
         }

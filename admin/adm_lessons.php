@@ -15,6 +15,12 @@
     document.getElementById('validId').selectedIndex = "0";
   }
 
+  function clearQuestInfo(){
+    document.getElementById("questNameId").value = "";
+    document.getElementById("questTextId").value = "";
+    document.getElementById("questExpId").value  = "";
+  }
+
   function getLessonInfo(id){
     xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
@@ -76,6 +82,10 @@
       if (this.readyState == 4 && this.status == 200) {
         var response = JSON.parse(this.responseText);
         if (response["action"]==1 || response["action"]==2){
+          // Uprav hodnotu lessonId
+          if (response["action"]==1){
+            document.getElementById("lessonId").value = response["id"];
+          }
           // Disable inputov
           document.getElementById("lessonId").disabled      = true;
           document.getElementById("nameId").disabled        = true;
@@ -110,6 +120,31 @@
     xhttp.send("id="+id+"&name="+name+"&desc="+desc+"&valid="+valid);
   }
 
+  function deleteLesson(){
+    // Spýtanie sa, či používateľ naozaj chce vymazať lekciu
+    if (confirm("Naozaj chcete zmazať túto lekciu? Bude zmazaná spolu so všetkými úlohami!")){
+      var lessonSelect = document.getElementById("lessonId");
+      var id = lessonSelect.value;
+      // Odobratie možnosti zo selectu
+      lessonSelect.remove(lessonSelect.selectedIndex);
+      // Zvolenie default možnosti (je by default) -> premazanie inputov
+      clearLessonInfo();
+      // Ajax request na zmazanie
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          var response = JSON.parse(this.responseText);
+          if (response['action'] != 1){
+            alert("Nepodarilo sa odstrániť vami zvolenú lekciu!");
+          }
+        }
+      };
+      xhttp.open("POST", "../ajax/deleteLesson.php", true);
+      xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      xhttp.send("id="+id);
+    }
+  }
+
   function addQuest(){
     // Ziskanie udajov z form-u
     var q_id = document.getElementById("questsId").value;
@@ -122,17 +157,23 @@
     xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
         var response = JSON.parse(this.responseText);
-        if (response["action"]==1 || response["action"]==2){
+        if (response["action"]==1){
+          // Pridaj option do selectu
+          addQuestToSelect(response["id"],name);
+          // Vyčistenie inputov
+          clearQuestInfo();
+        } else if(response["action"]==2){
+          // Ak treba, uprav meno option-u v select-e
+          /*TODO*/
           alert();
         } else{
-          //alert("Nastala chyba pri zapísaní / aktualizovaní úlohy!");
-          alert(response["action"]);
+          alert("Nastala chyba pri zapísaní / aktualizovaní úlohy!");
         }
       }
     };
     xhttp.open("POST", "../ajax/newQuest.php", true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhttp.send("q_id="+q_id+"l_id="+l_id+"&name="+name+"&desc="+desc+"&exp="+exp);
+    xhttp.send("q_id="+q_id+"&l_id="+l_id+"&name="+name+"&desc="+desc+"&exp="+exp);
   }
 </script>
 
@@ -145,13 +186,13 @@
     <div class="form-inline">
       <label>Lekcia:&nbsp</label>
       <select name="id" id="lessonId" class="form-control" style="width:200px;">
-        <option value="0" onclick="clearLessonInfo()">Vytvor novú</option>
+        <option value="0" onclick="clearLessonInfo();document.getElementById('delete_btn_id').style.display='none';">Vytvor novú</option>
 <?php
   $query = "SELECT id, name FROM ROBOCODE.lessons ORDER BY id";
   $query_run = mysqli_query($con,$query);
   if (mysqli_num_rows($query_run)){
     while ($row = mysqli_fetch_assoc($query_run)){
-      echo '<option value="'.$row['id'].'" onclick="getLessonInfo(this.value)">'.$row['name'].'</option>';
+      echo '<option value="'.$row['id'].'" onclick="getLessonInfo(this.value);document.getElementById(&quot;delete_btn_id&quot;).style.display=&quot;block&quot;;">'.$row['name'].'</option>';
     }
   }
 ?>
@@ -176,7 +217,8 @@
         <option value="Y">Prístupná</option>
         <option value="N">Neprístupná</option>
       </select>&nbsp&nbsp
-      <input class="btn btn-outline-info my-2 my-sm-0" onclick="addLesson()" type="button" value="Ďalej" id="submit_btn_id" name="submit_btn">
+      <input class="btn btn-outline-info my-2 my-sm-0"   onclick="addLesson()" type="button" value="Ďalej" id="submit_btn_id">&nbsp&nbsp
+      <input class="btn btn-outline-danger my-2 my-sm-0" onclick="deleteLesson()" type="button" value="Vymaž" id="delete_btn_id" style="display:none">
     </div>
   </form>
 
@@ -185,7 +227,7 @@
     <div class="form-inline">
       <label>Úloha:&nbsp&nbsp</label>
       <select id="questsId" class="form-control">
-        <option value="0" onclick="fillQuest(0)">Vytvoriť novú</option>
+        <option value="0" onclick="fillQuest(0);">Vytvoriť novú</option>
       </select>
     </div>
     <br>
@@ -204,7 +246,7 @@
       <textarea class="form-control" rows="5" name="text" id="questTextId"></textarea>
     </div>
     <div class="form-group">
-      <input class="btn btn-outline-info my-2 my-sm-0" onclick="addQuest()" type="button" value="Ďalej" id="submit_btn_id" name="submit_btn">
+      <input class="btn btn-outline-info my-2 my-sm-0" onclick="addQuest()" type="button" value="Ďalej" id="submit_btn_id">
     </div>
   </form>
 
