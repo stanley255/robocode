@@ -112,3 +112,15 @@ CREATE TABLE ROBOCODE.QUESTS_MAP(
   FOREIGN KEY(fk_lesson_id) REFERENCES LESSONS(id),
   FOREIGN KEY(fk_quest_id)  REFERENCES QUESTS(id)
 );
+
+CREATE TABLE ROBOCODE.QUESTS_SOLVERS(
+  id           INT PRIMARY KEY AUTO_INCREMENT,
+  fk_lesson_id INT,
+  fk_quest_id  INT,
+  fk_user_id   INT,
+  status       VARCHAR(1),
+  FOREIGN KEY(fk_lesson_id) REFERENCES LESSONS(id),
+  FOREIGN KEY(fk_quest_id)  REFERENCES QUESTS(id),
+  FOREIGN KEY(fk_user_id)  REFERENCES USERS(ID),
+  CHECK (status='Y' OR status='N' OR status='P')
+);

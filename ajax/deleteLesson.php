@@ -26,11 +26,18 @@
                 if (mysqli_stmt_bind_param($stmt,"i",$id)){
                   if (mysqli_stmt_execute($stmt)){
                     mysqli_stmt_close($stmt);
-                    // Zmazanie samotných questov
-                    $query = 'DELETE FROM ROBOCODE.QUESTS WHERE id IN ('.implode(",",$a_quests).')';
+                    // Zmazanie údajov z QUESTS_SOLVERS pre danú lekciu (fk_lesson_id)
+                    $query = "DELETE FROM ROBOCODE.QUESTS_SOLVERS WHERE fk_lesson_id = ".$id;
                     $query_run = mysqli_query($con,$query);
-                    if (mysqli_affected_rows($con)){
-                      $response['action'] = 1;
+                    if (mysqli_affected_rows($con)>=0){
+                      // Zmazanie samotných questov
+                      $query = 'DELETE FROM ROBOCODE.QUESTS WHERE id IN ('.implode(",",$a_quests).')';
+                      $query_run = mysqli_query($con,$query);
+                      if (mysqli_affected_rows($con)){
+                        $response['action'] = 1;
+                      }
+                    } else{
+                      $response['action'] = -1;
                     }
                   }
                 }

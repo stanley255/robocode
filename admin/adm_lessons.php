@@ -165,7 +165,8 @@
         } else if(response["action"]==2){
           // Ak treba, uprav meno option-u v select-e
           /*TODO*/
-          alert();
+          var q_sel = document.getElementById("questsId");
+          q_sel.options[q_sel.selectedIndex].innerHTML = name;
         } else{
           alert("Nastala chyba pri zapísaní / aktualizovaní úlohy!");
         }
@@ -179,7 +180,7 @@
 
 <div class="container text-center pagnation">
     <hr>
-      <h3>Lekcia</h3>
+      <h3 id="titleId">Lekcia</h3>
     <hr>
     <form id="lessonFormId">
     <!-- Select -->
