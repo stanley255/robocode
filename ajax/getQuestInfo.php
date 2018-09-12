@@ -5,8 +5,8 @@
   if (empty($_SESSION['privilege']) or $_SESSION['privilege']!=4){
     echo '-1';
   }
-  // Ziskanie questov, ktore prisluchaju k danej lekcii
-  //header('Content-Type: application/json');
+  // Ziskanie info o queste s danym ID
+  header('Content-Type: application/json');
   $id = $_REQUEST["id"];
   if ($stmt = mysqli_prepare($con,"SELECT * FROM ROBOCODE.QUESTS WHERE id = ?")){
     if (mysqli_stmt_bind_param($stmt,"i",$id)){

@@ -106,9 +106,10 @@ CREATE TABLE ROBOCODE.QUESTS(
 );
 
 CREATE TABLE ROBOCODE.QUESTS_MAP(
+  id           INT PRIMARY KEY AUTO_INCREMENT,
   fk_lesson_id INT,
   fk_quest_id  INT,
-  quest_order  INT,
+  quest_order  INT DEFAULT NULL,
   FOREIGN KEY(fk_lesson_id) REFERENCES LESSONS(id),
   FOREIGN KEY(fk_quest_id)  REFERENCES QUESTS(id)
 );

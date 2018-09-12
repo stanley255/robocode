@@ -30,7 +30,7 @@ $response['action'] = -1;
           mysqli_stmt_close($stmt);
           $response['action'] = 1;
           // Keď bol úspešne pridaný -> zmapuj ho
-          if ($stmt = mysqli_prepare($con,"INSERT INTO ROBOCODE.QUESTS_MAP VALUES(?,?,null)")){
+          if ($stmt = mysqli_prepare($con,"INSERT INTO ROBOCODE.QUESTS_MAP(fk_lesson_id,fk_quest_id) VALUES(?,?)")){
             if (mysqli_stmt_bind_param($stmt,"ii",$l_id,$q_id)){
               if (mysqli_stmt_execute($stmt)){
                 mysqli_stmt_close($stmt);

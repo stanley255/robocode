@@ -4,7 +4,7 @@
   include '../includes/navbar.php';
   // Pristupy
   if (empty($_SESSION['privilege']) or $_SESSION['privilege']!=4){
-    header('location:../../index.html');
+    header('location:../index.html');
   }
 ?>
 <div class="container pagination">
