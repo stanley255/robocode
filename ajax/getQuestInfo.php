@@ -11,7 +11,7 @@
   if ($stmt = mysqli_prepare($con,"SELECT * FROM ROBOCODE.QUESTS WHERE id = ?")){
     if (mysqli_stmt_bind_param($stmt,"i",$id)){
       if (mysqli_stmt_execute($stmt)){
-      if (mysqli_stmt_bind_result($stmt,$q_id,$q_name,$q_description,$q_exp)){
+        if (mysqli_stmt_bind_result($stmt,$q_id,$q_name,$q_description,$q_exp)){
           if (mysqli_stmt_fetch($stmt)){
             $response["id"]          = $q_id;
             $response["name"]        = $q_name;

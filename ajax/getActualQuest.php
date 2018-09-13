@@ -1,4 +1,4 @@
-  <?php
+<?php
   require '../dbconfig/config.php';
   session_start();
   // kontrola pristupov
@@ -6,7 +6,7 @@
     echo '-1';
   }
 
-  header('Content-Type: application/json');
+  //header('Content-Type: application/json');
   $l_id = $_REQUEST["l_id"];
   // Ziskanie recent quest-u
 
@@ -15,8 +15,8 @@
       if (mysqli_stmt_execute($stmt)){
         if (mysqli_stmt_bind_result($stmt,$q_id)){
           if (mysqli_stmt_fetch($stmt)){
-            if (!mysqli_stmt_num_rows($stmt)){
-              mysqli_stmt_close($stmt);
+            mysqli_stmt_close($stmt);
+            if (is_null($q_id)){
               // Lekcia je dokoncena
               $response["status"] = "Y";
               echo json_encode($response);
@@ -25,7 +25,6 @@
               $response["status"] = "N";
               // Ziskanie quest info
               $query = "SELECT * FROM ROBOCODE.QUESTS WHERE id = ".$q_id;
-              mysqli_stmt_close($stmt);
               $query_run = mysqli_query($con,$query);
               if (mysqli_num_rows($query_run)){
                 if ($row = mysqli_fetch_assoc($query_run)){
@@ -37,6 +36,9 @@
                 }
               }
             }
+          } else{
+            $response["status"] = "Y";
+            echo json_encode($response);
           }
         }
       }

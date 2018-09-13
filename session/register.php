@@ -106,7 +106,11 @@
             // Kontrola, či bolo heslo zadané správne
             if ($password==$password_ver){
                 // Hash hesla
+                $username = password_hash($username,PASSWORD_DEFAULT);
+                $name     = password_hash($name,PASSWORD_DEFAULT);
+                $surname  = password_hash($surname,PASSWORD_DEFAULT);
                 $password = password_hash($password,PASSWORD_DEFAULT);
+                $email    = password_hash($email,PASSWORD_DEFAULT);
                 // Vlozenie pouzivatelskych udajov do tabulky users
                 if ($stmt = mysqli_prepare($con, "INSERT INTO ROBOCODE.USERS(username,name,surname,email,password,registration_date,team_id,exp,privilege) VALUES(?,?,?,?,?,?,?,?,?)")){
                   if (mysqli_stmt_bind_param($stmt,"sssssssii",$username,$name,$surname,$email,$password,$date,$team,$exp,$privilege)){

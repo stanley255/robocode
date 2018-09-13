@@ -7,12 +7,15 @@
   }
 ?>
 <div class="container">
-
+<br>
+  <div class="alert alert-success" role="alert" id="finishedId" hidden="">
+    Splnil si všetky úlohy v tejto lekcií!
+  </div>
 <!-- JAVASCRIPT -->
 <script>
   function hideLesson(btn){
     if (document.getElementById("recQuestId").value==0){
-      alert("Splnil si všetky úlohy v tejto lekcií!");
+      document.getElementById("finishedId").removeAttribute("hidden");
     } else{
       btn.style.display="none";
       btn.disabled = true;
@@ -69,14 +72,15 @@
         var response = JSON.parse(this.responseText);
         if (response["status"] == "Y"){
           // Lekcia bola dokončená
-          alert("Splnil si všetky úlohy v tejto lekcií!");
+          document.getElementById("finishedId").removeAttribute("hidden");
+          btn.disabled = true;
         } else{
           // Nastavenie noveho nazvu a textu
           document.getElementById("titleId").innerHTML       = response["name"];
           document.getElementById("descriptionId").innerHTML = response["description"];
           // Nastavenie IDcka a statusu
-          document.getElementById("recQuestId").value = response["id"];
-          document.getElementById("recQuestStatus").value = response["status"];
+          document.getElementById("recQuestId").value        = response["id"];
+          document.getElementById("recQuestStatus").value    = response["status"];
           // Enable a disable prislusnych buttonov
           btn.disabled = true;
           document.getElementById("control_quest_btn_id").disabled = false;
@@ -152,12 +156,12 @@
         if (mysqli_stmt_execute($stmt)){
           if (mysqli_stmt_bind_result($stmt,$l_name,$l_desc)){
             if (mysqli_stmt_fetch($stmt)){
-              echo '<br><hr><h1 id="titleId" style="text-align:center;">'.$l_name.'</h1><hr><br>';
+              echo '<hr><h1 id="titleId" style="text-align:center;">'.$l_name.'</h1><hr><br>';
               echo '<h4 id="descriptionId">'.$l_desc.'</h4>';
               mysqli_stmt_close($stmt);
               // Button pre skrytie popisu lekcie, etc. a načítanie najaktuálnejšieho questu pre daného user-a
               echo '<div style="text-align:center">';
-              echo '  <input class="btn btn-info my-2 my-sm-0"  onclick="hideLesson(this)" type="button" value="Úlohy" id="submit_btn_id">';
+              echo '  <input class="btn btn-info my-2 my-sm-0"  onclick="hideLesson(this);" type="button" value="Úlohy" id="submit_btn_id">';
               echo '  <input class="btn btn-warning my-2 my-sm-0" onclick="validateQuest(this)" style="display:none" type="button" value="Kotrola" id="control_quest_btn_id">&nbsp&nbsp';
               echo '  <input class="btn btn-info my-2 my-sm-0"  onclick="getNextQuest(this)" style="display:none" type="button" value="Ďalej" id="next_quest_btn_id" disabled>';
               echo '</div>';
