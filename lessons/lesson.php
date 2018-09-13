@@ -60,7 +60,7 @@
     xhttp.send();
   }
 
-  function getNextQuest(){
+  function getNextQuest(btn){
     var l_id = document.getElementById("lessonId").value;
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
@@ -78,7 +78,8 @@
           document.getElementById("recQuestId").value = response["id"];
           document.getElementById("recQuestStatus").value = response["status"];
           // Enable a disable prislusnych buttonov
-          /*TODO*/
+          btn.disabled = true;
+          document.getElementById("control_quest_btn_id").disabled = false;
         }
       }
     };
@@ -158,7 +159,7 @@
               echo '<div style="text-align:center">';
               echo '  <input class="btn btn-info my-2 my-sm-0"  onclick="hideLesson(this)" type="button" value="Úlohy" id="submit_btn_id">';
               echo '  <input class="btn btn-warning my-2 my-sm-0" onclick="validateQuest(this)" style="display:none" type="button" value="Kotrola" id="control_quest_btn_id">&nbsp&nbsp';
-              echo '  <input class="btn btn-info my-2 my-sm-0"  onclick="getNextQuest()" style="display:none" type="button" value="Ďalej" id="next_quest_btn_id" disabled>';
+              echo '  <input class="btn btn-info my-2 my-sm-0"  onclick="getNextQuest(this)" style="display:none" type="button" value="Ďalej" id="next_quest_btn_id" disabled>';
               echo '</div>';
             }
           }

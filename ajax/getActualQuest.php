@@ -1,4 +1,4 @@
-<?php
+  <?php
   require '../dbconfig/config.php';
   session_start();
   // kontrola pristupov
@@ -15,7 +15,7 @@
       if (mysqli_stmt_execute($stmt)){
         if (mysqli_stmt_bind_result($stmt,$q_id)){
           if (mysqli_stmt_fetch($stmt)){
-            if (mysqli_stmt_num_rows($stmt)){
+            if (!mysqli_stmt_num_rows($stmt)){
               mysqli_stmt_close($stmt);
               // Lekcia je dokoncena
               $response["status"] = "Y";
