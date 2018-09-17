@@ -76,7 +76,7 @@ include '../includes/navbar.php';
     echo '</tr>';
   }
   echo '<tr>';
-  echo '  <td>Dokopy</td>';
+  echo '  <td>Spolu</td>';
   foreach($a_students_present as $student_total){
     echo '<td>'.$student_total.'</td>';
   }

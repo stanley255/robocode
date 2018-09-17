@@ -12,10 +12,10 @@ body {
 
 /*------- HEADER --------*/
 header {
-  height: 800px;
-  min-height: 800px;
+  height: 650px;
+  min-height: 650px;
   padding: 0 5%;
-  background-image: url('../img/test.jpg');
+  background-image: url('../img/test2.jpg');
   background-repeat: no-repeat;
   background-size: contain;
   background-position: top right;
@@ -46,4 +46,31 @@ header h1 span {
   position: relative;
   top: 33%;
   transform: translateY(-33%);
+}
+
+/******* RESPONSIVE ******/
+@media only screen and (max-width: 1111px){
+  body{
+    background-color: red;
+  }
+  header {
+    height: 650px;
+    min-height: 650px;
+    padding: 0 5%;
+    background-image: url('../img/mobile_test.jpg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: top right;
+  }
+
+  header h1 {
+    font-size:60px;
+    font-weight: bold;
+    margin: 2em 0 0 1em;
+  }
+
+  header h1 span {
+    font-size:40px;
+    font-weight: normal;
+  }
 }

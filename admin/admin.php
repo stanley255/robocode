@@ -28,7 +28,7 @@
     <hr>
     <h3>LEKCIE</h3>
     <a class="btn btn-outline-info my-2 my-sm-0 active" href="/robocode/admin/adm_lessons.php">Pridaj</a>
-    <a class="btn btn-outline-info my-2 my-sm-0 active" href="/robocode/admin/adm_lessons_confirm.php">Schvalovanie</a>
+    <a class="btn btn-outline-info my-2 my-sm-0"        href="/robocode/admin/adm_quests_confirm.php">Schvaľovanie</a>
     <hr>
   </div>
   <div class="col-md-2"></div>
