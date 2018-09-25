@@ -9,9 +9,9 @@
 ?>
 <script>
 // Vymazanie riadku v tabulke
-function deleteRow(r) {
+function deleteRow(r,id) {
     var i = r.parentNode.parentNode.rowIndex;
-    document.getElementById("questConfTable").deleteRow(i);
+    document.getElementById("questConfTable"+id).deleteRow(i);
 }
 // Funkcia na pridanie skusenosti pouzivatelovi a zmeny stavu z P->Y
   // TODO: Zmena parametrov funkcie + priprava APIs
@@ -21,10 +21,17 @@ function confirmQuest(row){
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
       // Zapíš EXP (ďalší AJAX)
-
+      xhttp2 = new XMLHttpRequest();
+      xhttp2.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          /*TODO*/          
+        }
+      };
+      xhttp2.open("GET", "../ajax/addQuestExp.php?id="+row.value, true);
+      xhttp2.send();
     }
   };
-  xhttp.open("GET", "../ajax/changeSolverQuestStatus.php?id="+id, true);
+  xhttp.open("GET", "../ajax/changeSolverQuestStatus.php?id="+row.value, true);
   xhttp.send();
 }
 
@@ -49,7 +56,7 @@ function confirmQuest(row){
   for ($i = 0; $i < count($a_lessons); $i++){
     echo '<h5>'.$a_lesson_name[$i].'</h5>';
     echo '<hr>';
-    echo '<table class="table table-bordered table-sm" id="questConfTable">';
+    echo '<table class="table table-bordered table-sm" id="questConfTable'.$a_lessons[$i].'">';
     echo '  <tr>';
     echo '    <th>Žiak</th>';
     echo '    <th>Lekcia</th>';
@@ -57,7 +64,7 @@ function confirmQuest(row){
     echo '    <th>Akcia</th>';
     echo '  </tr>';
     // Loopuj záznamami v stave P = Pending
-    $query = "SELECT QS.id, U.username, QS.fk_lesson_id, QS.fk_quest_id FROM QUESTS_SOLVERS QS JOIN USERS U ON QS.fk_user_id = U.id WHERE status = 'P' ORDER BY QS.fk_lesson_id, QS.fk_quest_id";
+    $query = "SELECT QS.id, U.username, QS.fk_lesson_id, QS.fk_quest_id FROM QUESTS_SOLVERS QS JOIN USERS U ON QS.fk_user_id = U.id WHERE QS.status = 'P' AND QS.fk_lesson_id = ".$a_lessons[$i]." ORDER BY QS.fk_lesson_id, QS.fk_quest_id";
     $query_run = mysqli_query($con,$query);
     while ($row = mysqli_fetch_assoc($query_run)){
       echo '<tr>';
@@ -66,9 +73,10 @@ function confirmQuest(row){
       echo '  <td>'.$row["fk_lesson_id"].'</td>';
       echo '  <td>'.$row["fk_quest_id"].'</td>';
       // Button pre potvrdenie vypracovanej úlohy
-      echo '  <td><button class="btn btn-outline-info my-2 my-sm-0" type="submit" name="submit_btn" value="'.$row["id"].'" onclick="confirmQuest(this);deleteRow(this)">Potvrď</button></td>';
+      echo '  <td><button class="btn btn-outline-info my-2 my-sm-0" type="submit" name="submit_btn" value="'.$row["id"].'" onclick="confirmQuest(this);deleteRow(this,'.$a_lessons[$i].')">Potvrď</button></td>';
       echo '</tr>';
     }
+    echo '</table>';
   }
 
 ?>

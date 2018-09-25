@@ -12,14 +12,24 @@
   <link rel="stylesheet" type="text/css" href="includes/fonts.css">
   <link rel="stylesheet" type="text/css" href="includes/registration_teams.css">
   <link rel="stylesheet" type="text/css" href="includes/index.css">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <style>
+    .menu_icon {
+        width: 27px;
+        height: 4px;
+        background-color: white;
+        margin: 6px 0;
+    }
+  </style>
+
   <title>RoboCode</title>
 </head>
   <body>
     <header>
-      <nav class="navbar navbar-expand-md fixed-top">
-          <a class="navbar-brand" href="/robocode/index.html">Robo Code</a>
+      <nav class="navbar navbar-expand-md fixed-top navbar-default">
+          <a class="navbar-brand" href="/robocode/index.html">ROBOCODE</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarDefault" aria-controls="navbarDefault" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
+          <span class="navbar-toggler-icon"><div class="menu_icon"></div><div class="menu_icon"></div><div class="menu_icon"></div></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarDefault">
@@ -27,20 +37,51 @@
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li class="nav-item">
-              <a class="nav-link" href="#">O nás</a>
+              <a class="nav-link" href="#">O NÁS</a>
             </li>
           </ul>
         </div>
       </nav>
       <br><br>
-      <h1>
-        Pridaj sa k nám!<br>
-        <span>
-          Naučíš sa programovať roboty,<br>
-          zabavíš sa, zasúťažíš si<br>
-          a zistíš mnoho zaujímavých vecí
-        </span>
-      </h1>
+
+      <div class="row">
+
+        <div class="column" id="sponsor_div">
+          <div class="w3-content w3-section" id="sponsor_imgs">
+            <a href="http://websupport.sk/domeny#site=freeweb&ban=9f0261c8" target="_blank">
+              <img class="mySlides" src="img/sponsor_2.png" id="sponsorimg1" style="width:100%">
+            </a>
+            <a href="https://www.nadaciaeset.sk/" target="_blank">
+              <img class="mySlides" src="img/sponsor_1.png" id="sponsorimg2" style="width:100%">
+            </a>
+          </div>
+          <script>
+            var myIndex = 0;
+            carousel();
+            function carousel() {
+                var i;
+                var x = document.getElementsByClassName("mySlides");
+                for (i = 0; i < x.length; i++) {
+                   x[i].style.display = "none";
+                }
+                myIndex++;
+                if (myIndex > x.length) {myIndex = 1}
+                x[myIndex-1].style.display = "block";
+                setTimeout(carousel, 7000);
+            }
+          </script>
+        </div>
+
+        <div class="column" id="logo_div">
+          <img src="img/g1.png" id="img1" alt=""/>
+        </div>
+        <div class="column" id="other_div">
+
+          <!-- TODO -->
+
+        </div>
+      </div>
+
   </header>
   <div class="sponsors_intro">
   </div>
