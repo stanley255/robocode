@@ -15,7 +15,7 @@
 echo '<br><h3 class="text-center">OZNAMY</h3>';
   // Zobrazenie pinnutych oznamov
     // Ziskanie pinnutych zaznamov z databazy
-  $query = "SELECT date, name, text FROM ROBOCODE.V_POSTS WHERE pinned = 'Y'";
+  $query = "SELECT date, username, text FROM ROBOCODE.V_POSTS WHERE pinned = 'Y'";
   $query_run = mysqli_query($con,$query);
   if (mysqli_num_rows($query_run)){
     // Vypisanie pinnutych zaznamov
@@ -28,7 +28,7 @@ echo '<br><h3 class="text-center">OZNAMY</h3>';
     echo '  <div class="card-body">';
     echo '    <p>'.$row["text"].'</p>';
     echo '    <div class="text-muted text-right">';
-    echo        $row["name"].', '.$shownDate;
+    echo        $row["username"].', '.$shownDate;
     echo '    </div>';
     echo '  </div>';
     echo '</div>';
@@ -39,7 +39,7 @@ echo '<br><h3 class="text-center">OZNAMY</h3>';
     echo '<script>alert("Nepodarilo sa získať pinnuté záznamy / žiadne neexistujú!");</script>';
   }*/
   // Zobrazenie prispevkov DESC na zaklade datumu (prvych 10)
-    $query = "SELECT date, name, text FROM ROBOCODE.V_POSTS WHERE pinned = 'N' LIMIT 10";
+    $query = "SELECT date, username, text FROM ROBOCODE.V_POSTS WHERE pinned = 'N' LIMIT 10";
     $query_run = mysqli_query($con,$query);
     if (mysqli_num_rows($query_run)){
       // Vypisanie pinnutych zaznamov
@@ -52,7 +52,7 @@ echo '<br><h3 class="text-center">OZNAMY</h3>';
       echo '  <div class="card-body">';
       echo '    <p>'.$row["text"].'</p>';
       echo '    <div class="text-muted text-right">';
-      echo        $row["name"].', '.$shownDate;
+      echo        $row["username"].', '.$shownDate;
       echo '    </div>';
       echo '  </div>';
       echo '</div>';

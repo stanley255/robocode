@@ -11,7 +11,7 @@
   }
 
   function validateForm(){
-    var email =       document.getElementById('emailId').value;
+    //var email =       document.getElementById('emailId').value;
     var password =    document.getElementById('passwordId').value;
     var passwordVer = document.getElementById('passwordVerId').value;
     if (password.length < 5){
@@ -22,10 +22,10 @@
         alert("Zadané heslá sa nezhodujú!");
         return false;
     }
-    if (validateEmail(email)==false && email.length!=0){
+    /*if (validateEmail(email)==false && email.length!=0){
         alert("E-mail bol chybne vyplnený!");
         return false;
-    }
+    }*/
     return true;
   }
 </script>
@@ -39,7 +39,7 @@
         <label for="usr">Prihlasovacie meno:</label>
         <input type="text" class="form-control" id="usernameId" name="username" required>
       </div>
-      <div class="form-group">
+      <!--<div class="form-group">
         <label for="pwd">Meno:</label>
         <input type="text" class="form-control" id="nameId" name="name" required>
       </div>
@@ -50,7 +50,7 @@
       <div class="form-group">
         <label for="pwd">E-mail:</label>
         <input type="text" class="form-control" id="emailId" name="email">
-      </div>
+      </div>!-->
       <div class="form-group">
         <label for="pwd">Heslo:</label>
         <input type="password" class="form-control" id="passwordId" name="password" required>
@@ -81,9 +81,9 @@
   if (isset($_POST['submit_btn'])){
     // Inicializacia premennych
     $username     = $_POST['username'];
-    $name         = $_POST['name'];
+    /*$name         = $_POST['name'];
     $surname      = $_POST['surname'];
-    $email        = $_POST['email'];
+    $email        = $_POST['email'];*/
     $password     = $_POST['password'];
     $password_ver = $_POST['passwordVer'];
     $team         = $_POST['team'];
@@ -105,15 +105,14 @@
         if (empty($potentialName)){
             // Kontrola, či bolo heslo zadané správne
             if ($password==$password_ver){
+                /*$name     = password_hash($name,PASSWORD_DEFAULT);
+                $surname  = password_hash($surname,PASSWORD_DEFAULT);*/
                 // Hash hesla
-                $username = password_hash($username,PASSWORD_DEFAULT);
-                $name     = password_hash($name,PASSWORD_DEFAULT);
-                $surname  = password_hash($surname,PASSWORD_DEFAULT);
                 $password = password_hash($password,PASSWORD_DEFAULT);
-                $email    = password_hash($email,PASSWORD_DEFAULT);
+                //$email    = password_hash($email,PASSWORD_DEFAULT);
                 // Vlozenie pouzivatelskych udajov do tabulky users
-                if ($stmt = mysqli_prepare($con, "INSERT INTO ROBOCODE.USERS(username,name,surname,email,password,registration_date,team_id,exp,privilege) VALUES(?,?,?,?,?,?,?,?,?)")){
-                  if (mysqli_stmt_bind_param($stmt,"sssssssii",$username,$name,$surname,$email,$password,$date,$team,$exp,$privilege)){
+                if ($stmt = mysqli_prepare($con, "INSERT INTO ROBOCODE.USERS(username,/*name,surname,email,*/password,registration_date,team_id,exp,privilege) VALUES(?,/*?,?,?,*/?,?,?,?,?)")){
+                  if (mysqli_stmt_bind_param($stmt,"ssssii"/*"sssssssii"*/,$username,/*$name,$surname,$email,*/$password,$date,$team,$exp,$privilege)){
                     if (mysqli_stmt_execute($stmt)){
                       // Záznam sa podarilo uložiť
                       echo '<script>alert("Registrácia bola úspešná, môžete sa prihlásiť!");window.location.replace("login.php");</script>';

@@ -16,9 +16,9 @@ include '../includes/navbar.php';
   echo '  <tr>';
   echo '    <th>ID</th>';
   echo '    <th>Username</th>';
-  echo '    <th width="150px">Meno</th>';
+  /*echo '    <th width="150px">Meno</th>';
   echo '    <th width="170px">Priezvisko</th>';
-  echo '    <th>E-mail</th>';
+  echo '    <th>E-mail</th>';*/
   echo '    <th width="180px">Team</th>';
   echo '    <th width="90px">EXP</th>';
   echo '    <th width="150px">Právo</th>';
@@ -62,11 +62,11 @@ include '../includes/navbar.php';
       // Username
       echo '<td><input type="text" class="form-control" id="" name="username'.$row['id'].'" value="'.$row['username'].'" required></td>';
       // Meno
-      echo '<td><input type="text" class="form-control" id="" name="name'.$row['id'].'" value="'.$row['name'].'" required></td>';
+      /*echo '<td><input type="text" class="form-control" id="" name="name'.$row['id'].'" value="'.$row['name'].'" required></td>';
       // Priezvisko
       echo '<td><input type="text" class="form-control" id="" name="surname'.$row['id'].'" value="'.$row['surname'].'" required></td>';
       // E-mail
-      echo '<td><input type="text" class="form-control" id="" name="email'.$row['id'].'" value="'.$row['email'].'"></td>';
+      echo '<td><input type="text" class="form-control" id="" name="email'.$row['id'].'" value="'.$row['email'].'"></td>';*/
       // Team-y
       echo '<td>';
       echo '  <select class="form-control" name="team'.$row["id"].'">';
@@ -113,19 +113,19 @@ include '../includes/navbar.php';
     // Ziskanie dat z formu
     $id         = $_POST["submit_btn"];
     $username   = $_POST["username$id"];
-    $name       = $_POST["name$id"];
+    /*$name       = $_POST["name$id"];
     $surname    = $_POST["surname$id"];
-    $email      = $_POST["email$id"];
+    $email      = $_POST["email$id"];*/
     $team       = $_POST["team$id"];
     $exp        = $_POST["exp$id"];
     $privilege  = $_POST["privilege$id"];
     // Kedže e-mail je nepovinný, treba overiť, či je definovaný
-    if (empty($email)){
+    /*if (empty($email)){
       $email='';
-    }
+    }*/
     // Update udajov v databaze
-    if ($stmt = mysqli_prepare($con,"UPDATE ROBOCODE.USERS SET username = ?, name = ?,surname = ?,email = ?,team_id = ?,exp = ?,privilege = ? WHERE id = ?")){
-      if (mysqli_stmt_bind_param($stmt,"ssssiiii",$username,$name,$surname,$email,$team,$exp,$privilege,$id)){
+    if ($stmt = mysqli_prepare($con,"UPDATE ROBOCODE.USERS SET username = ?, /*name = ?,surname = ?,email = ?,*/team_id = ?,exp = ?,privilege = ? WHERE id = ?")){
+      if (mysqli_stmt_bind_param($stmt,"siiii"/*"ssssiiii"*/,$username,/*$name,$surname,$email,*/$team,$exp,$privilege,$id)){
         if (mysqli_stmt_execute($stmt)){
           // Údaje sa podarilo zmeniť
           mysqli_stmt_close($stmt);

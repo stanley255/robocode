@@ -23,14 +23,14 @@ include '../includes/navbar.php';
   echo '    <th>Úprava</th>';
   echo '  </tr>';
   // Vypis clankov, ktore sa daju upravit (UPDATE: Iba tých, ktoré pridal daný používateľ)
-  $query = "SELECT * FROM ROBOCODE.V_POSTS WHERE user_id = ".$_SESSION["user_id"];
+  $query = "SELECT * FROM ROBOCODE.V_POSTS WHERE username = '".$_SESSION['username']."'";
   $query_run = mysqli_query($con,$query);
   if (mysqli_num_rows($query_run)){
     while ($row = mysqli_fetch_assoc($query_run)){
       echo '<tr>';
       echo '  <td>'.$row["id"].'</td>';
       echo '  <td>'.$row["date"].'</td>';
-      echo '  <td>'.$row["name"].' '.$row["surname"].'</td>';
+      echo '  <td>'.$row["username"].'</td>';
       echo '  <td>';
       echo '    <select class="form-control" name="pinned'.$row["id"].'">';
       if ($row["pinned"]=='Y'){

@@ -11,12 +11,23 @@ CREATE TABLE ROBOCODE.PRIVILEGES(
   CHECK (valid='Y' OR valid='N')
 );
 
-CREATE TABLE ROBOCODE.USERS(
+/*CREATE TABLE ROBOCODE.USERS(
   id                     INT PRIMARY KEY AUTO_INCREMENT,
   username               VARCHAR(50),
   name                   VARCHAR(50),
   surname                VARCHAR(50),
   email                  VARCHAR(50),
+  password               VARCHAR(300),
+  registration_date      DATE,
+  team_id                INT,
+  exp                    INT DEFAULT 0,
+  privilege              INT DEFAULT 0,
+  FOREIGN KEY(team_id)   REFERENCES TEAMS(ID),
+  FOREIGN KEY(privilege) REFERENCES PRIVILEGES(ID)
+);*/
+CREATE TABLE ROBOCODE.USERS(
+  id                     INT PRIMARY KEY AUTO_INCREMENT,
+  username               VARCHAR(50),
   password               VARCHAR(300),
   registration_date      DATE,
   team_id                INT,
