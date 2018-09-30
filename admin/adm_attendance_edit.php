@@ -83,15 +83,15 @@ if (mysqli_num_rows($query_run)){
         <select class="form-control" name="lector">
 <?php
       // Výber lektorov(príp. správcov) z databázy
-  $query = "SELECT id, name, surname FROM ROBOCODE.USERS WHERE PRIVILEGE IN (3,4)";
+  $query = "SELECT id, username FROM ROBOCODE.USERS WHERE PRIVILEGE IN (3,4)";
   $query_run = mysqli_query($con,$query);
   if (mysqli_num_rows($query_run)){
     while($row = mysqli_fetch_assoc($query_run)){
       // Vypísanie lektorov/správcov ako možnosti
       if ($lector_id == $row['id']){
-        echo '<option value='.$row['id'].' selected>'.$row['name'].' '.$row['surname'].'</option>';
+        echo '<option value='.$row['id'].' selected>'.$row['username'].'</option>';
       } else{
-        echo '<option value='.$row['id'].'>'.$row['name'].' '.$row['surname'].'</option>';
+        echo '<option value='.$row['id'].'>'.$row['username'].'</option>';
       }
     }
   } else{
@@ -108,12 +108,12 @@ if (mysqli_num_rows($query_run)){
         </tr>
 <?php
   // Získanie žiakov z databázy
-  $query = "SELECT id, name, surname FROM ROBOCODE.USERS WHERE privilege IN(2)";
+  $query = "SELECT id, username FROM ROBOCODE.USERS WHERE privilege IN(2)";
   $query_run = mysqli_query($con,$query);
   if (mysqli_num_rows($query_run)){
     while ($row = mysqli_fetch_assoc($query_run)){
       echo '<tr>';
-      echo '  <td class="table-danger" onclick="changeColor(this,'.$row['id'].')" id = "mycolumn'.$row['id'].'"><label style="font-size:18px">'.$row['name'].' '.$row['surname'].'</label></td>';
+      echo '  <td class="table-danger" onclick="changeColor(this,'.$row['id'].')" id = "mycolumn'.$row['id'].'"><label style="font-size:18px">'.$row['username'].'</label></td>';
       echo '  <input type="checkbox" class="checkbox" hidden style="position:absolute;" name="students[]" value="'.$row['id'].'" id="mycheckbox'.$row['id'].'">';
       echo '</tr>';
     }
@@ -242,7 +242,7 @@ if (mysqli_num_rows($query_run)){
             $updated = 0;
             if (!empty($a_present_students)){
               foreach ($a_present_students as $student_id){
-                $query = "INSERT INTO ROBOCODE.ATTENDANCE VALUES('.$id.','.$student_id.')";
+                $query = "INSERT INTO ROBOCODE.ATTENDANCE(fk_event_id,fk_user_id) VALUES('.$id.','.$student_id.')";
                 $query_run = mysqli_query($con,$query);
                 if (mysqli_affected_rows($con)>=0){
                   $updated++;
@@ -250,7 +250,8 @@ if (mysqli_num_rows($query_run)){
               }
             }
             // Uspesna transakcia
-            echo '<script>alert("Udalosť bola úspešne upravená a bolo k nej úspešne priradených '.$updated.' z '.count($a_present_students).' študentov!");</script>';
+            echo '<script></script>';
+            echo '<script>alert("Udalosť bola úspešne upravená a bolo k nej úspešne priradených '.$updated.' z '.count($a_present_students).' študentov!");window.location.replace("adm_attendance_show.php");</script>';
           } else{
             echo '<script>alert("Udalosť bol úspešne upravená ale študentov sa nepodarilo odstrániť!");</script>';
           }

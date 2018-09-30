@@ -21,13 +21,13 @@ include '../includes/navbar.php';
   // Žiaci
   $a_students_id = [];
   $i = 0;
-  $query = "SELECT id,name FROM ROBOCODE.USERS WHERE privilege IN (2) ORDER BY ID";
+  $query = "SELECT id,username FROM ROBOCODE.USERS WHERE privilege IN (2) ORDER BY ID";
   $query_run = mysqli_query($con,$query);
     // Vypis heading-u
   if (mysqli_num_rows($query_run)){
     while($row = mysqli_fetch_assoc($query_run)){
       $a_students_id[$i++] = $row['id'];
-      echo '<th> '.$row['name'].' </th>';
+      echo '<th> '.$row['username'].' </th>';
     }
   }
   echo '</tr>';

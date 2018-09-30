@@ -56,7 +56,7 @@
             if ($_SESSION['privilege']>1){
               header('location:../dashboard.php');
             } else{
-              header('location:../index.html');
+              header('location:logout.php');
             }
           } else{
             // Heslá sa nezhodujú

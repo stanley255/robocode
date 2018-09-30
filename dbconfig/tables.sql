@@ -95,6 +95,7 @@ CREATE TABLE ROBOCODE.EVENTS(
 );
 
 CREATE TABLE ROBOCODE.ATTENDANCE(
+  id                       INT PRIMARY KEY AUTO_INCREMENT,
   fk_event_id              INT,
   fk_user_id               INT,
   FOREIGN KEY(fk_event_id) REFERENCES EVENTS(ID),

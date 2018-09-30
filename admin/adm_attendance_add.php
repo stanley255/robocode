@@ -60,12 +60,12 @@ if (mysqli_num_rows($query_run)){
         <select class="form-control" name="lector">
 <?php
       // Výber lektorov(príp. správcov) z databázy
-  $query = "SELECT id, name, surname FROM ROBOCODE.USERS WHERE PRIVILEGE IN (3,4)";
+  $query = "SELECT id, username/*name, surname*/ FROM ROBOCODE.USERS WHERE PRIVILEGE IN (3,4)";
   $query_run = mysqli_query($con,$query);
   if (mysqli_num_rows($query_run)){
     while($row = mysqli_fetch_assoc($query_run)){
       // Vypísanie lektorov/správcov ako možnosti
-      echo '<option value='.$row['id'].'>'.$row['name'].' '.$row['surname'].'</option>';
+      echo '<option value='.$row['id'].'>'.$row['username'].'</option>';
     }
   } else{
     echo '<script>alert("Nepodarilo sa získať údaje o lektoroch!");</script>';
@@ -81,12 +81,12 @@ if (mysqli_num_rows($query_run)){
         </tr>
 <?php
   // Získanie žiakov z databázy
-  $query = "SELECT id, name, surname FROM ROBOCODE.USERS WHERE privilege IN(2)";
+  $query = "SELECT id, username/*name, surname*/ FROM ROBOCODE.USERS WHERE privilege IN(2)";
   $query_run = mysqli_query($con,$query);
   if (mysqli_num_rows($query_run)){
     while ($row = mysqli_fetch_assoc($query_run)){
       echo '<tr>';
-      echo '  <td class="table-danger" onclick="changeColor(this,'.$row['id'].')"><label style="font-size:18px">'.$row['name'].' '.$row['surname'].'</label></td>';
+      echo '  <td class="table-danger" onclick="changeColor(this,'.$row['id'].')"><label style="font-size:18px">'.$row['username'].'</label></td>';
       echo '  <input type="checkbox" class="checkbox" hidden style="position:absolute;" name="students[]" value="'.$row['id'].'" id="mycheckbox'.$row['id'].'">';
       echo '</tr>';
     }
@@ -211,7 +211,7 @@ if (mysqli_num_rows($query_run)){
                  $counter = 0;
                  // Pridanie študentov
                  foreach ($a_present_students as $present_student){
-                   $query = 'INSERT INTO ROBOCODE.ATTENDANCE VALUES('.$event_id.','.$present_student.')';
+                   $query = 'INSERT INTO ROBOCODE.ATTENDANCE(fk_event_id,fk_user_id) VALUES('.$event_id.','.$present_student.')';
                    $query_run = mysqli_query($con,$query);
                    if (mysqli_affected_rows($con)){
                      $counter++;

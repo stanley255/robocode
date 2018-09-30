@@ -84,6 +84,7 @@
         if (response["action"]==1 || response["action"]==2){
           // Uprav hodnotu lessonId
           if (response["action"]==1){
+            alert(response["action"]+":"+response["id"]); // DEBUG ONLY
             document.getElementById("lessonId").value = response["id"];
           }
           // Disable inputov
