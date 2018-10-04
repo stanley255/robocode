@@ -115,7 +115,7 @@
                   if (mysqli_stmt_bind_param($stmt,"ssssii"/*"sssssssii"*/,$username,/*$name,$surname,$email,*/$password,$date,$team,$exp,$privilege)){
                     if (mysqli_stmt_execute($stmt)){
                       // Záznam sa podarilo uložiť
-                      echo '<script>alert("Registrácia bola úspešná, môžete sa prihlásiť!");window.location.replace("login.php");</script>';
+                      echo '<script>alert("Registrácia bola úspešná, poproste administrátora o potvrdenie registrácie a môžete sa prihlásiť!");window.location.replace("login.php");</script>';
                       mysqli_stmt_close($stmt);
                     } else{
                       // Nepodarilo sa uložiť...
